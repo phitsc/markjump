@@ -17,7 +17,16 @@ $marks = $null;
 # four shell functions jump, mark, unmark, and marks:
 
 # jump to a folder
-function jump($name) {
+function jump {
+  param (
+    [ArgumentCompleter( {
+        $wordToComplete = $args[2];
+        $marks.keys | where { $_ -like "$wordToComplete*" } | sort
+      } )
+    ]
+    [string] $name
+  )
+
   if ($name -eq $null) {
     marks;
     # also display help.
@@ -47,7 +56,16 @@ function mark([string]$name) {
 }
 
 # unmark the current folder
-function unmark([string]$name) {
+function unmark {
+  param (
+    [ArgumentCompleter( {
+        $wordToComplete = $args[2];
+        $marks.keys | where { $_ -like "$wordToComplete*" } | sort
+      } )
+    ]
+    [string] $name
+  )
+
   if ($name -eq "") {
     marks;
     # also display help.
